@@ -24,6 +24,7 @@ Click the link to auth your Spotify account, and that's it.
 - Grab the current state of lights when a Spotify session begins, so we can reset back to what it was when the session completes
 - Async requests to bulbs
 - Use subset of bulbs
+- Support non-light strip bulbs
 - Monitor multiple users
 - Enable/disable via specific scene (i.e. don't change anything unless FollowSpotify scene is enabled)
 - Config file + more configurable options (bulb names, transition durations, etc)
