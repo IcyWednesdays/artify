@@ -17,6 +17,8 @@ Start Artify by running:
  $ SPOTIFY_ID=<SPOTIFY_ID> SPOTIFY_SECRET=<SPOTIFY_SECRET> ARTIFY_PLAYER_DEVICE=<NAME_OF_SPOTIFY_LISTENING_DEVICE> ARTIFY_SCENE_NAME=<OPTIONAL: INSIDETOOUT|BLENDED> go run .
 ```
 
+Click the link to auth your Spotify account, and that's it.
+
 ## TODO
 
 - Grab the current state of lights when a Spotify session begins, so we can reset back to what it was when the session completes
