@@ -49,31 +49,66 @@ func (a *ActiveSession) updateLightColours() {
 }
 
 func (b *Bulb) SetLightColour(detectedColours DetectedColours, sceneConfiguration *ZoneConfig) {
-	for _, z := range sceneConfiguration.Primary {
-		b.MultizoneSetColorZones(&golifx.HSBK{
-			Hue:        uint16(detectedColours.Primary.H),
-			Saturation: uint16(detectedColours.Primary.S),
-			Brightness: uint16(detectedColours.Primary.B),
-			Kelvin:     uint16(3500),
-		}, uint32(5000), uint8(z.Start), uint8(z.End))
-	}
+	go func() {
+		for _, z := range sceneConfiguration.Primary {
+			err := b.MultizoneSetColorZones(&golifx.HSBK{
+				Hue:        uint16(detectedColours.Primary.H),
+				Saturation: uint16(detectedColours.Primary.S),
+				Brightness: uint16(detectedColours.Primary.B),
+				Kelvin:     uint16(3500),
+			}, uint32(5000), uint8(z.Start), uint8(z.End))
 
-	for _, z := range sceneConfiguration.Secondary {
-		b.MultizoneSetColorZones(&golifx.HSBK{
-			Hue:        uint16(detectedColours.Secondary.H),
-			Saturation: uint16(detectedColours.Secondary.S),
-			Brightness: uint16(detectedColours.Secondary.B),
-			Kelvin:     uint16(3500),
-		}, uint32(5000), uint8(z.Start), uint8(z.End))
-	}
+			// If we hit an error, they're usually transient so try again
+			if err != nil {
+				b.MultizoneSetColorZones(&golifx.HSBK{
+					Hue:        uint16(detectedColours.Primary.H),
+					Saturation: uint16(detectedColours.Primary.S),
+					Brightness: uint16(detectedColours.Primary.B),
+					Kelvin:     uint16(3500),
+				}, uint32(5000), uint8(z.Start), uint8(z.End))
+			}
+		}
+	}()
 
-	for _, z := range sceneConfiguration.Tertiary {
-		b.MultizoneSetColorZones(&golifx.HSBK{
-			Hue:        uint16(detectedColours.Tertiary.H),
-			Saturation: uint16(detectedColours.Tertiary.S),
-			Brightness: uint16(detectedColours.Tertiary.B),
-			Kelvin:     uint16(3500),
-		}, uint32(5000), uint8(z.Start), uint8(z.End))
-	}
+	go func() {
+		for _, z := range sceneConfiguration.Secondary {
+			err := b.MultizoneSetColorZones(&golifx.HSBK{
+				Hue:        uint16(detectedColours.Secondary.H),
+				Saturation: uint16(detectedColours.Secondary.S),
+				Brightness: uint16(detectedColours.Secondary.B),
+				Kelvin:     uint16(3500),
+			}, uint32(5000), uint8(z.Start), uint8(z.End))
 
+			// If we hit an error, they're usually transient so try again
+			if err != nil {
+				b.MultizoneSetColorZones(&golifx.HSBK{
+					Hue:        uint16(detectedColours.Secondary.H),
+					Saturation: uint16(detectedColours.Secondary.S),
+					Brightness: uint16(detectedColours.Secondary.B),
+					Kelvin:     uint16(3500),
+				}, uint32(5000), uint8(z.Start), uint8(z.End))
+			}
+		}
+	}()
+
+	go func() {
+		for _, z := range sceneConfiguration.Tertiary {
+			err := b.MultizoneSetColorZones(&golifx.HSBK{
+				Hue:        uint16(detectedColours.Tertiary.H),
+				Saturation: uint16(detectedColours.Tertiary.S),
+				Brightness: uint16(detectedColours.Tertiary.B),
+				Kelvin:     uint16(3500),
+			}, uint32(5000), uint8(z.Start), uint8(z.End))
+
+			// If we hit an error, they're usually transient so try again
+			if err != nil {
+				b.MultizoneSetColorZones(&golifx.HSBK{
+					Hue:        uint16(detectedColours.Secondary.H),
+					Saturation: uint16(detectedColours.Secondary.S),
+					Brightness: uint16(detectedColours.Secondary.B),
+					Kelvin:     uint16(3500),
+				}, uint32(5000), uint8(z.Start), uint8(z.End))
+			}
+		}
+	}()
 }
