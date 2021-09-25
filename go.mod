@@ -4,7 +4,7 @@ go 1.13
 
 require (
 	github.com/EdlinOrg/prominentcolor v1.0.0
-	github.com/IcyWednesdays/golifx v0.0.0-20210827235428-1aa3de0cc6ca
+	github.com/IcyWednesdays/golifx v0.0.0-20210830121011-7f1ed8744ae5
 	github.com/gerow/go-color v0.0.0-20140219113758-125d37f527f1
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/lucasb-eyer/go-colorful v1.2.0 // indirect

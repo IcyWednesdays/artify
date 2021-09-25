@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/zmb3/spotify"
 )
@@ -13,10 +14,16 @@ var html = `
 `
 
 var (
-	user *spotify.PrivateUser
+	endpoint string
+	user     *spotify.PrivateUser
 )
 
 func main() {
+	endpoint, isSet := os.LookupEnv("ARTIFY_ENDPOINT")
+	if !isSet {
+		endpoint = "localhost"
+	}
+
 	// Callback for authenticating the user
 	http.HandleFunc("/callback", handleAuthCallback)
 
@@ -32,6 +39,5 @@ func main() {
 		go monitorForActiveSession(client)
 	}()
 
-	http.ListenAndServe(":8080", nil)
-
+	http.ListenAndServe(fmt.Sprintf("%s:8080", endpoint), nil)
 }

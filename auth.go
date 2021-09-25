@@ -11,7 +11,7 @@ import (
 var (
 	authChannel   = make(chan *spotify.Client, 1)
 	authenticator = spotify.NewAuthenticator(redirectURI, spotify.ScopeUserReadCurrentlyPlaying, spotify.ScopeUserReadPlaybackState, spotify.ScopeUserModifyPlaybackState)
-	redirectURI   = "http://localhost:8080/callback"
+	redirectURI   = fmt.Sprintf("http://%s:8080/callback", endpoint)
 	state         = "authState"
 )
 
