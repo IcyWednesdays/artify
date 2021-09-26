@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 
 	"github.com/zmb3/spotify"
 )
@@ -14,18 +13,17 @@ var html = `
 `
 
 var (
-	endpoint string
-	user     *spotify.PrivateUser
+	authUrlChan = make(chan string, 1)
+	endpoint    = getEnv("ARTIFY_ENDPOINT", "localhost")
+	user        *spotify.PrivateUser
 )
 
 func main() {
-	endpoint, isSet := os.LookupEnv("ARTIFY_ENDPOINT")
-	if !isSet {
-		endpoint = "localhost"
-	}
-
 	// Callback for authenticating the user
 	http.HandleFunc("/callback", handleAuthCallback)
+
+	// Receive the auth URL and create a redirect on /auth
+	http.HandleFunc("/auth", authRedirectHandler)
 
 	// Once authenticated, kick off the main goroutine for the program
 	go func() {
