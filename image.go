@@ -59,17 +59,17 @@ func getAlbumArtworkDominantColours(url string) (DetectedColours, error) {
 func getImageFromUrl(url string) (image.Image, error) {
 	res, err := http.Get(url)
 	if err != nil {
-		return nil, fmt.Errorf("Failed to download image data from URL %s. \nError: %s", url, err)
+		return nil, fmt.Errorf("failed to download image data from URL %s. \nError: %s", url, err)
 	}
 
 	imgBytes, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		return nil, fmt.Errorf("Failed to read data from URL response. \nError: %s", err)
+		return nil, fmt.Errorf("failed to read data from URL response. \nError: %s", err)
 	}
 
 	img, _, err := image.Decode(bytes.NewReader(imgBytes))
 	if err != nil {
-		return nil, fmt.Errorf("Failed to decode raw image data into Image. \nError: %s", err)
+		return nil, fmt.Errorf("failed to decode raw image data into Image. \nError: %s", err)
 	}
 
 	return img, nil

@@ -37,5 +37,8 @@ func main() {
 		go monitorForActiveSession(client)
 	}()
 
-	http.ListenAndServe(fmt.Sprintf("%s:8080", endpoint), nil)
+	err := http.ListenAndServe(fmt.Sprintf("%s:8080", endpoint), nil)
+	fmt.Println("Artify started on port 8080")
+
+	fmt.Printf("Error: %s\n", err)
 }
